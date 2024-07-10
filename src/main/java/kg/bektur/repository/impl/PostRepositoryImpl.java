@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import kg.bektur.entity.Post;
+import kg.bektur.exception.PostNotFoundException;
 import kg.bektur.repository.PostRepository;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class PostRepositoryImpl implements PostRepository {
         try {
             dynamoDB.delete(findById(id));
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Post with id " + id + " not found and cannot be deleted");
+            throw new PostNotFoundException("Post with id " + id + " not found and cannot be deleted");
         }
     }
 }
