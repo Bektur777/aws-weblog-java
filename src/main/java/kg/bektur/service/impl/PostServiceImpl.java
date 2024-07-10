@@ -3,6 +3,7 @@ package kg.bektur.service.impl;
 import kg.bektur.dto.PostCreateDto;
 import kg.bektur.dto.PostDto;
 import kg.bektur.entity.Post;
+import kg.bektur.exception.PostNotFoundException;
 import kg.bektur.mapper.PostMapper;
 import kg.bektur.repository.PostRepository;
 import kg.bektur.repository.impl.PostRepositoryImpl;
@@ -35,7 +36,7 @@ public class PostServiceImpl implements PostService {
             return PostMapper.INSTANCE.postToPostDto(post.get());
         }
 
-        throw new NoSuchElementException("Post with this id=" + id + " not found");
+        throw new PostNotFoundException("Post with this id=" + id + " not found");
     }
 
     @Override
