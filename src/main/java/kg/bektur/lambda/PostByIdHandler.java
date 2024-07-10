@@ -35,7 +35,7 @@ public class PostByIdHandler implements RequestHandler<APIGatewayProxyRequestEve
         if (postId == null || postId.isEmpty()) {
             logger.log("Post ID is empty: " + postId);
             return new APIGatewayProxyResponseEvent()
-                    .withStatusCode(500)
+                    .withStatusCode(400)
                     .withBody("Invalid path parameter: " + postId);
         }
 
