@@ -1,4 +1,4 @@
-package kg.bektur.lambda;
+package kg.bektur.handler;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;

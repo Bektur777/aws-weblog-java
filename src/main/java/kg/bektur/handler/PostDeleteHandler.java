@@ -1,4 +1,4 @@
-package kg.bektur.lambda;
+package kg.bektur.handler;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
@@ -42,7 +42,7 @@ public class PostDeleteHandler implements RequestHandler<APIGatewayProxyRequestE
             postService.delete(postId);
             return new APIGatewayProxyResponseEvent()
                     .withStatusCode(200)
-                    .withHeaders(ResponseHeaders.DEFAULT_POST_HEADERS)
+                    .withHeaders(ResponseHeaders.DEFAULT_DELETE_HEADERS)
                     .withBody("Successfully deleted post: " + postId);
         } catch (PostNotFoundException e) {
             logger.log("WARN: " + e.getMessage());
