@@ -3,9 +3,14 @@ package kg.bektur;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.*;
+import software.amazon.awscdk.services.apigateway.RestApi;
+import software.amazon.awscdk.services.lambda.Function;
 import software.constructs.Construct;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
+
+import static kg.bektur.config.ApiGatewayConfig.createApiRequest;
+import static kg.bektur.config.LambdaConfig.*;
 // import software.amazon.awscdk.Duration;
 // import software.amazon.awscdk.services.sqs.Queue;
 
@@ -35,8 +40,16 @@ public class AwsWeblogJavaStack extends Stack {
                 )
                 .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
 
-        String tableArn = ddb.createTable(request).getTableDescription().getTableName();
+        String tableName = ddb.createTable(request).getTableDescription().getTableName();
 
+        System.out.println(tableName);
 
+        Function getPostListLambda = getPostsLambdaFunction(this, "GetPostListLambda", tableName);
+        Function getPostByIdLambda = getPostLambdaFunction(this, "GetPostByIdLambda", tableName);
+        Function createPostLambda = createPostLambdaFunction(this, "CreatePostLambda", tableName);
+        Function deletePostLambda = deletePostLambdaFunction(this, "DeletePostLambda", tableName);
+
+        RestApi api = createApiRequest(this, "PostServiceApi", getPostListLambda, getPostByIdLambda,
+                createPostLambda, deletePostLambda);
     }
 }
