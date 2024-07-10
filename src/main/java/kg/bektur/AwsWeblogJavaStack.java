@@ -1,5 +1,8 @@
 package kg.bektur;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
+import com.amazonaws.services.dynamodbv2.model.*;
 import software.constructs.Construct;
 import software.amazon.awscdk.Stack;
 import software.amazon.awscdk.StackProps;
@@ -20,5 +23,20 @@ public class AwsWeblogJavaStack extends Stack {
         // final Queue queue = Queue.Builder.create(this, "AwsWeblogJavaQueue")
         //         .visibilityTimeout(Duration.seconds(300))
         //         .build();
+        AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+
+        CreateTableRequest request = new CreateTableRequest()
+                .withTableName("posts")
+                .withKeySchema(new KeySchemaElement("id", KeyType.HASH))
+                .withAttributeDefinitions(
+                        new AttributeDefinition("id", ScalarAttributeType.S),
+                        new AttributeDefinition("title", ScalarAttributeType.S),
+                        new AttributeDefinition("content", ScalarAttributeType.S)
+                )
+                .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
+
+        String tableArn = ddb.createTable(request).getTableDescription().getTableName();
+
+
     }
 }
