@@ -42,12 +42,9 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public void deleteById(String id) {
         try {
-            Optional<Post> post = findById(id);
-            if (post.isPresent()) {
-                dynamoDB.delete(post.get());
-            } else {
-                throw new PostNotFoundException(id);
-            }
+            Post postToDelete = new Post();
+            postToDelete.setId(id);
+            dynamoDB.delete(postToDelete);
         } catch (IllegalArgumentException e) {
             throw new PostNotFoundException("Post with id " + id + " not found and cannot be deleted");
         }

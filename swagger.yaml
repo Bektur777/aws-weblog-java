@@ -1,80 +1,80 @@
 openapi: 3.0.3
 info:
   title: Post Service API
-  description: API для управления постами.
+  description: API for managing posts.
   version: 1.0.0
 servers:
-  - url: https://api.example.com/v1
-    description: Основной сервер
+  - url: https://2vtvpj15ii.execute-api.us-east-1.amazonaws.com/prod
+    description: Main server
 paths:
   /posts/{postId}:
     get:
-      summary: Получить пост по ID
-      description: Возвращает информацию о посте по его идентификатору.
+      summary: Get Post by ID
+      description: Retrieves information about a post by its identifier.
       parameters:
         - name: postId
           in: path
           required: true
-          description: Идентификатор поста
+          description: The identifier of the post
           schema:
             type: string
       responses:
         '200':
-          description: Успешный ответ
+          description: Successful response
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Post'
         '400':
-          description: Некорректный идентификатор поста
+          description: Invalid post identifier
           content:
             text/plain:
               schema:
                 type: string
         '404':
-          description: Пост не найден
+          description: Post not found
           content:
             text/plain:
               schema:
                 type: string
         '500':
-          description: Внутренняя ошибка сервера
+          description: Internal server error
           content:
             text/plain:
               schema:
                 type: string
 
     delete:
-      summary: Удалить пост по ID
-      description: Удаляет пост по его идентификатору.
+      summary: Delete Post by ID
+      description: Deletes a post by its identifier.
       parameters:
         - name: postId
           in: path
           required: true
-          description: Идентификатор поста
+          description: The identifier of the post
           schema:
             type: string
       responses:
         '200':
-          description: Успешно удалено
+          description: Successfully deleted
           content:
             text/plain:
               schema:
                 type: string
         '400':
-          description: Некорректный идентификатор поста
+          description: Invalid post identifier
           content:
             text/plain:
               schema:
                 type: string
         '404':
-          description: Пост не найден
+          description: Post not found
           content:
             text/plain:
               schema:
                 type: string
         '500':
-          description: Внутренняя ошибка сервера
+          description: Internal server error
           content:
             text/plain:
               schema:
@@ -82,10 +82,10 @@ paths:
 
   /posts:
     post:
-      summary: Создать новый пост
-      description: Создает новый пост.
+      summary: Create a New Post
+      description: Creates a new post.
       requestBody:
-        description: Данные для создания нового поста
+        description: Data to create a new post
         required: true
         content:
           application/json:
@@ -93,24 +93,24 @@ paths:
               $ref: '#/components/schemas/PostCreateDto'
       responses:
         '201':
-          description: Пост успешно создан
+          description: Post successfully created
           content:
             text/plain:
               schema:
                 type: string
         '500':
-          description: Внутренняя ошибка сервера
+          description: Internal server error
           content:
             text/plain:
               schema:
                 type: string
 
     get:
-      summary: Получить список всех постов
-      description: Возвращает список всех постов.
+      summary: Get All Posts
+      description: Retrieves a list of all posts.
       responses:
         '200':
-          description: Успешный ответ
+          description: Successful response
           content:
             application/json:
               schema:
@@ -118,7 +118,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Post'
         '500':
-          description: Внутренняя ошибка сервера
+          description: Internal server error
           content:
             text/plain:
               schema:
