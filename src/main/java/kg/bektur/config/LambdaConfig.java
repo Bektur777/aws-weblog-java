@@ -20,7 +20,7 @@ public class LambdaConfig {
     public static Function deletePostLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostDeleteHandler::handleRequest",
-                List.of(DynamoDBOperations.DELETE_ITEM),
+                List.of(DynamoDBOperations.GET_ITEM, DynamoDBOperations.DELETE_ITEM),
                 List.of(POST_TABLE_NAME));
     }
 
