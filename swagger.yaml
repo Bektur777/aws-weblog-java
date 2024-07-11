@@ -1,0 +1,145 @@
+openapi: 3.0.3
+info:
+  title: Post Service API
+  description: API для управления постами.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/v1
+    description: Основной сервер
+paths:
+  /posts/{postId}:
+    get:
+      summary: Получить пост по ID
+      description: Возвращает информацию о посте по его идентификатору.
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: Идентификатор поста
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        '400':
+          description: Некорректный идентификатор поста
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Пост не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            text/plain:
+              schema:
+                type: string
+
+    delete:
+      summary: Удалить пост по ID
+      description: Удаляет пост по его идентификатору.
+      parameters:
+        - name: postId
+          in: path
+          required: true
+          description: Идентификатор поста
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Успешно удалено
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Некорректный идентификатор поста
+          content:
+            text/plain:
+              schema:
+                type: string
+        '404':
+          description: Пост не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            text/plain:
+              schema:
+                type: string
+
+  /posts:
+    post:
+      summary: Создать новый пост
+      description: Создает новый пост.
+      requestBody:
+        description: Данные для создания нового поста
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCreateDto'
+      responses:
+        '201':
+          description: Пост успешно создан
+          content:
+            text/plain:
+              schema:
+                type: string
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            text/plain:
+              schema:
+                type: string
+
+    get:
+      summary: Получить список всех постов
+      description: Возвращает список всех постов.
+      responses:
+        '200':
+          description: Успешный ответ
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+        '500':
+          description: Внутренняя ошибка сервера
+          content:
+            text/plain:
+              schema:
+                type: string
+
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+
+    PostCreateDto:
+      type: object
+      properties:
+        title:
+          type: string
+        content:
+          type: string
