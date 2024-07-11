@@ -15,32 +15,34 @@ import java.util.List;
 
 public class LambdaConfig {
 
-    public static Function deletePostLambdaFunction(Construct scope, String id, String tableName) {
+    private static final String POST_TABLE_NAME = "arn:aws:dynamodb:us-east-1:975050038015:table/posts";
+
+    public static Function deletePostLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostDeleteHandler::handleRequest",
                 List.of(DynamoDBOperations.DELETE_ITEM),
-                List.of(tableName));
+                List.of(POST_TABLE_NAME));
     }
 
-    public static Function createPostLambdaFunction(Construct scope, String id, String tableName) {
+    public static Function createPostLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostCreateHandler::handleRequest",
                 List.of(DynamoDBOperations.PUT_ITEM),
-                List.of(tableName));
+                List.of(POST_TABLE_NAME));
     }
 
-    public static Function getPostLambdaFunction(Construct scope, String id, String tableName) {
+    public static Function getPostLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostByIdHandler::handleRequest",
                 List.of(DynamoDBOperations.GET_ITEM),
-                List.of(tableName));
+                List.of(POST_TABLE_NAME));
     }
 
-    public static Function getPostsLambdaFunction(Construct scope, String id, String tableName) {
+    public static Function getPostsLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostListHandler::handleRequest",
                 List.of(DynamoDBOperations.SCAN_ITEMS),
-                List.of(tableName));
+                List.of(POST_TABLE_NAME));
     }
 
     public static Function createLambdaFunctionToManipulatingPosts(Construct scope, String id,

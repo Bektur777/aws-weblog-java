@@ -28,26 +28,26 @@ public class AwsWeblogJavaStack extends Stack {
         // final Queue queue = Queue.Builder.create(this, "AwsWeblogJavaQueue")
         //         .visibilityTimeout(Duration.seconds(300))
         //         .build();
-        AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+//        AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder.defaultClient();
+//
+//        CreateTableRequest request = new CreateTableRequest()
+//                .withTableName("posts")
+//                .withAttributeDefinitions(
+//                        new AttributeDefinition("id", ScalarAttributeType.S),
+//                        new AttributeDefinition("title", ScalarAttributeType.S),
+//                        new AttributeDefinition("content", ScalarAttributeType.S)
+//                )
+//                .withKeySchema(new KeySchemaElement("id", KeyType.HASH))
+//                .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
+//
+//        String tableName = ddb.createTable(request).getTableDescription().getTableName();
+//
+//        System.out.println(tableName);
 
-        CreateTableRequest request = new CreateTableRequest()
-                .withTableName("posts")
-                .withKeySchema(new KeySchemaElement("id", KeyType.HASH))
-                .withAttributeDefinitions(
-                        new AttributeDefinition("id", ScalarAttributeType.S),
-                        new AttributeDefinition("title", ScalarAttributeType.S),
-                        new AttributeDefinition("content", ScalarAttributeType.S)
-                )
-                .withProvisionedThroughput(new ProvisionedThroughput(5L, 5L));
-
-        String tableName = ddb.createTable(request).getTableDescription().getTableName();
-
-        System.out.println(tableName);
-
-        Function getPostListLambda = getPostsLambdaFunction(this, "GetPostListLambda", tableName);
-        Function getPostByIdLambda = getPostLambdaFunction(this, "GetPostByIdLambda", tableName);
-        Function createPostLambda = createPostLambdaFunction(this, "CreatePostLambda", tableName);
-        Function deletePostLambda = deletePostLambdaFunction(this, "DeletePostLambda", tableName);
+        Function getPostListLambda = getPostsLambdaFunction(this, "GetPostListLambda");
+        Function getPostByIdLambda = getPostLambdaFunction(this, "GetPostByIdLambda");
+        Function createPostLambda = createPostLambdaFunction(this, "CreatePostLambda");
+        Function deletePostLambda = deletePostLambdaFunction(this, "DeletePostLambda");
 
         RestApi api = createApiRequest(this, "PostServiceApi", getPostListLambda, getPostByIdLambda,
                 createPostLambda, deletePostLambda);
