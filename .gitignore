@@ -11,3 +11,6 @@ target
 .cdk.staging
 cdk.out
 
+# Layers dependencies
+layer
+aws-weblog-dependencies.zip
