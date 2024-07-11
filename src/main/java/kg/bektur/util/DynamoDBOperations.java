@@ -8,5 +8,7 @@ public class DynamoDBOperations {
 
     public static final String PUT_ITEM = "dynamodb:PutItem";
 
+    public static final String UPDATE_ITEM = "dynamodb:PutItem";
+
     public static final String DELETE_ITEM = "dynamodb:DeleteItem";
 }

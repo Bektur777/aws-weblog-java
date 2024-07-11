@@ -27,7 +27,7 @@ public class LambdaConfig {
     public static Function createPostLambdaFunction(Construct scope, String id) {
         return createLambdaFunctionToManipulatingPosts(scope, id,
                 "kg.bektur.handler.PostCreateHandler::handleRequest",
-                List.of(DynamoDBOperations.PUT_ITEM),
+                List.of(DynamoDBOperations.UPDATE_ITEM, DynamoDBOperations.PUT_ITEM),
                 List.of(POST_TABLE_NAME));
     }
 
